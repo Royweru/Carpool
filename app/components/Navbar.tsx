@@ -2,10 +2,12 @@
 
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
+import useLoginModal from '../hooks/useLoginModal'
 
 
 
 export default function Navbar () {
+const loginModal = useLoginModal()
 
   const [state, setState] = useState(false)
   const navRef = useRef()
@@ -77,9 +79,11 @@ export default function Navbar () {
                                 </a>
                             </li>
                             <li className="mt-4 lg:mt-0">
-                                <a href="javascript:void(0)" className="py-3 px-4 text-center border text-gray-600 hover:text-indigo-600 rounded-md block lg:inline lg:border-0">
-                                    Login
-                                </a>
+                                <div onClick={loginModal.onOpen} className=" hover:cursor-pointer py-3 px-4 text-center border text-gray-600 hover:text-indigo-600 rounded-md block lg:inline lg:border-0">
+                                Login
+                                </div>
+                                   
+                                
                             </li>
                             <li className="mt-8 lg:mt-0">
                                 <a href="javascript:void(0)" className="py-3 px-4 text-center text-white bg-indigo-600 hover:bg-indigo-700 rounded-md shadow block lg:inline">

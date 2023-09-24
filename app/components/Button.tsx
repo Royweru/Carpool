@@ -49,6 +49,7 @@ const Button:React.FC<ButtonProps> = ({
           '
          /> 
        )}
+       {label}
     </button>
   )
 }

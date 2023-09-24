@@ -58,6 +58,10 @@ const Modal: React.FC<ModalProps> = ({
     }
     secondaryAction();
   }, [disabled, secondaryAction]);
+
+  if(!isOpen){
+    return null
+  }
   return (
     <>
       <div
@@ -130,6 +134,7 @@ const Modal: React.FC<ModalProps> = ({
            "
               >
                 <button
+                onClick={onClose}
                   className="
              p-1
              border-0
