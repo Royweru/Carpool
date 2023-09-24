@@ -46,7 +46,7 @@ export default function Navbar () {
                             src="/images/logo.jpg" 
                             width={50} 
                             height={50}
-                            alt="Float UI logo"
+                            alt="Carpool logo"
                             className=' rounded-sm'
                         />
                     </a>
