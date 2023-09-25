@@ -9,31 +9,48 @@ import Heading from '../Heading'
 import Input from '@/app/inputs/Input'
 import Button from '../Button'
 import{FcGoogle} from 'react-icons/fc'
+import axios from 'axios'
 import useRegisterModal from '@/app/hooks/useRegisterModal'
 
-const LoginModal = () => {
+const RegisterModal = () => {
     const loginModal = useLoginModal()
     const registerModal = useRegisterModal()
     const router = useRouter()
     const [isLoading,setIsLoading] = useState(false)
    
     const toggle = useCallback(()=>{
-        loginModal.onClose()
-        registerModal.onOpen()
+       registerModal.onClose()
+       loginModal.onOpen()
     },[registerModal,loginModal])
+
     const {
         register,   
         handleSubmit,
         formState: { errors },
+        reset
       } = useForm<FieldValues>({
         defaultValues: {
           email: "",
+          name:"",
           password: "",
         },
       });
 
-    const onSubmit = ()=>{
-
+    const onSubmit:SubmitHandler<FieldValues> = (data)=>{
+        setIsLoading(true)
+        axios.post('/api/register',data).then(
+            ()=>{
+                reset
+                registerModal.onClose()
+                console.log('successful')
+            }
+        ).catch((err)=>{
+            console.error('Err:', err)
+        }).finally(()=>{
+            setIsLoading(false)
+        }
+        )
+        
     }
 
    const bodyContent = (
@@ -42,6 +59,14 @@ const LoginModal = () => {
       <Input
         id='email'
         label='Email'
+        register={register}
+        required
+        disabled={isLoading}
+        errors={errors}
+        />
+         <Input
+        id='name'
+        label='Name'
         register={register}
         required
         disabled={isLoading}
@@ -59,7 +84,7 @@ const LoginModal = () => {
    )
 
    const footerContent= (
-    <div className=' flex flex-col gap-5 mt-4'>
+    <div className=' flex flex-col gap-5 mt-2'>
         <hr />
      <Button
        outline
@@ -68,13 +93,13 @@ const LoginModal = () => {
        disabled={isLoading}
        onClick={()=>{}}
        />
-        <div className=' text 2xl text-rose-950 font-light text-center mt-3'>
-        <div className=' flex flex-row items-center justify-center'>
+       <div onClick={toggle} className=' text 2xl text-rose-950 font-light text-center mt-3'>
+        <div className=' flex flex-row items-center justify-center gap-x-1'>
              <div>
-                 First time using carpool?
+                Already have an account?
              </div>
-             <div onClick={toggle}  className=' underline hover:cursor-pointer hover:opacity-80  hover:font-bold'>
-                Sign Up
+             <div className=' underline hover:cursor-pointer hover:opacity-80  hover:font-bold'>
+                Login
              </div>
         </div>
 
@@ -84,16 +109,16 @@ const LoginModal = () => {
    
   return (
    <Modal
-    isOpen={loginModal.isOpen}
+    isOpen={registerModal.isOpen}
     onSubmit={handleSubmit(onSubmit)}
-    onClose={loginModal.onClose}
-    title='Login'
-    subtitle='Welcome back to carpool'
+    onClose={registerModal.onClose}
+    title='Register'
+    subtitle='New here? sign up'
     body={bodyContent}
-    actionLabel='Sign In'
+    actionLabel='Sign up'
     footer={footerContent}
     />
   )
 }
 
-export default LoginModal
+export default RegisterModal
