@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import useLoginModal from "../hooks/useLoginModal";
 import useRegisterModal from "../hooks/useRegisterModal";
+import Avatar from "./Avatar";
 
 export default function Navbar() {
   const loginModal = useLoginModal();
@@ -94,14 +95,7 @@ export default function Navbar() {
         >
           <div>
             <ul className="flex flex-col-reverse space-x-0 lg:space-x-6 lg:flex-row">
-              <li className="mt-8 mb-8 lg:mt-0 lg:mb-0">
-                <a
-                  href="javascript:void(0)"
-                  className="text-gray-600 hover:text-indigo-600"
-                >
-                  Contact
-                </a>
-              </li>
+              
               <li className="mt-4 lg:mt-0">
                 <div
                   onClick={loginModal.onOpen}
@@ -117,6 +111,11 @@ export default function Navbar() {
                 >
                   Sign Up
                 </div>
+              </li>
+              <li className="mt-8 mb-8 lg:mt-0 lg:mb-0">
+              <div className="text-gray-600 hover:text-indigo-600">
+                 <Avatar/>
+              </div>
               </li>
             </ul>
           </div>
