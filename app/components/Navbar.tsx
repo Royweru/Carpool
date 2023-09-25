@@ -1,14 +1,19 @@
 "use client";
-
+import { User } from "@prisma/client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useLoginModal from "../hooks/useLoginModal";
 import useRegisterModal from "../hooks/useRegisterModal";
 import Avatar from "./Avatar";
+import { signOut } from "next-auth/react";
 
-export default function Navbar() {
+interface NavbarProps {
+  currentUser: User |null;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   const loginModal = useLoginModal();
-  const registerModal= useRegisterModal();
+  const registerModal = useRegisterModal();
 
   const [state, setState] = useState(false);
   const navRef = useRef();
@@ -94,30 +99,50 @@ export default function Navbar() {
           }`}
         >
           <div>
-            <ul className="flex flex-col-reverse space-x-0 lg:space-x-6 lg:flex-row">
-              
-              <li className="mt-4 lg:mt-0">
-                <div
-                  onClick={loginModal.onOpen}
-                  className=" hover:cursor-pointer py-3 px-4 text-center border text-gray-600 hover:text-indigo-600 rounded-md block lg:inline lg:border-0"
-                >
-                  Login
-                </div>
-              </li>
-              <li className="mt-8 lg:mt-0">
-                <div
-                  onClick={registerModal.onOpen}
-                  className=" hover:cursor-pointer py-3 px-4 text-center border text-gray-600 hover:text-indigo-600 rounded-md block lg:inline lg:border-0"
-                >
-                  Sign Up
-                </div>
-              </li>
-              <li className="mt-8 mb-8 lg:mt-0 lg:mb-0">
-              <div className="text-gray-600 hover:text-indigo-600">
-                 <Avatar/>
-              </div>
-              </li>
-            </ul>
+            {currentUser ? (
+              <>
+                <ul className="flex flex-col-reverse space-x-0 lg:space-x-6 lg:flex-row">
+                  <li className="mt-8 lg:mt-0">
+                    <div
+                      onClick={() => {
+                        signOut;
+                      }}
+                      className=" hover:cursor-pointer py-3 px-4 text-center border text-gray-600 hover:text-indigo-600 rounded-md block lg:inline lg:border-0"
+                    >
+                      Sign Out
+                    </div>
+                  </li>
+                  <li className="mt-8 mb-8 lg:mt-0 lg:mb-0">
+                    <div className="text-gray-600 hover:text-indigo-600">
+                      <Avatar />
+                    </div>
+                  </li>
+                </ul>
+              </>
+            ) : (
+              <>
+                <ul className="flex flex-col-reverse space-x-0 lg:space-x-6 lg:flex-row">
+                  <li className="mt-8 lg:mt-0">
+                    <div
+                      onClick={loginModal.onOpen}
+                      className=" hover:cursor-pointer py-3 px-4 text-center border text-gray-600 hover:text-indigo-600 rounded-md block lg:inline lg:border-0"
+                    >
+                      Login
+                    </div>
+                  </li>
+
+                  <li className="mt-8 lg:mt-0">
+                    <div
+                      onClick={registerModal.onOpen}
+                      className=" hover:cursor-pointer py-3 px-4 text-center border text-gray-600 hover:text-indigo-600 rounded-md block lg:inline lg:border-0"
+                    >
+                      Sign Up
+                    </div>
+                  </li>
+                 
+                </ul>
+              </>
+            )}
           </div>
           <div className="flex-1">
             <ul className="justify-center items-center space-y-8 lg:flex lg:space-x-6 lg:space-y-0">
@@ -134,4 +159,6 @@ export default function Navbar() {
       </div>
     </nav>
   );
-}
+};
+
+export default Navbar;

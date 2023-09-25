@@ -10,6 +10,7 @@ import Input from '@/app/inputs/Input'
 import Button from '../Button'
 import{FcGoogle} from 'react-icons/fc'
 import useRegisterModal from '@/app/hooks/useRegisterModal'
+import {signIn} from 'next-auth/react'
 
 const LoginModal = () => {
     const loginModal = useLoginModal()
@@ -25,16 +26,35 @@ const LoginModal = () => {
         register,   
         handleSubmit,
         formState: { errors },
+        reset
       } = useForm<FieldValues>({
         defaultValues: {
           email: "",
           password: "",
         },
       });
-
-    const onSubmit = ()=>{
-
-    }
+      const onSubmit: SubmitHandler<FieldValues> = (data:any) => {
+        setIsLoading(true);
+    
+        signIn('credentials',{
+            ...data,
+            redirect:false,
+            
+        }).then((callback)=>{
+            setIsLoading(false)
+    
+            if(callback?.ok){
+                
+                router.refresh()
+                loginModal.onClose()
+            }
+            if(callback?.error){
+                console.error(callback.error)
+            }
+        }).finally(()=>{
+          setIsLoading(false)
+        })
+      };
 
    const bodyContent = (
     <div className=' flex flex-col gap-3'>
