@@ -66,6 +66,7 @@ model Car{
    image String[]
    seller String
    estimatedArrival String?
+   
 
    bookings Booking[]
    user User @relation(fields: [userId],references: [id],onDelete:Cascade)

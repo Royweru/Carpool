@@ -1,19 +1,28 @@
 "use client";
 import { User } from "@prisma/client";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import useLoginModal from "../hooks/useLoginModal";
 import useRegisterModal from "../hooks/useRegisterModal";
+import useSellModal from "../hooks/useSellModal";
 import Avatar from "./Avatar";
 import { signOut } from "next-auth/react";
 
 interface NavbarProps {
-  currentUser: User |null;
+  currentUser: User | null;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
+  const sellModal = useSellModal();
+
+  const onSell = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+    return sellModal.onOpen();
+  }, [loginModal, sellModal, currentUser]);
 
   const [state, setState] = useState(false);
   const navRef = useRef();
@@ -21,9 +30,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   // Replace javascript:void(0) path with your path
   const navigation = [
     { title: "Home", path: "javascript:void(0)" },
-    { title: "Sell", path: "javascript:void(0)" },
-    { title: "Buy", path: "javascript:void(0)" },
-    { title: "Rent", path: "javascript:void(0)" },
+    { title: "Contact", path: "javascript:void(0)" },
+    { title: "Blog", path: "javascript:void(0)" },
   ];
 
   useEffect(() => {
@@ -102,16 +110,26 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             {currentUser ? (
               <>
                 <ul className="flex flex-col-reverse space-x-0 lg:space-x-6 lg:flex-row">
-                  <li className="mt-8 lg:mt-0">
+                  <li className=" mt-8 lg:mt-0 mb-2">
                     <div
-                      onClick={()=>{signOut()}}
-                      className=" hover:cursor-pointer py-3 px-4 text-center border text-gray-600 hover:text-indigo-600 rounded-md block lg:inline lg:border-0"
+                      onClick={onSell}
+                      className="flex justify-center items-center bg-slate-500 rounded-md px-5 py-2 hover:cursor-pointer hover:text-red-400 "
+                    >
+                      Sell
+                    </div>
+                  </li>
+                  <li className="mt-10 lg:mt-0">
+                    <div
+                      onClick={() => {
+                        signOut();
+                      }}
+                      className=" hover:cursor-pointer py-3 px-4  font-bold font-mono  text-center border text-gray-600 hover:text-indigo-600 rounded-md block lg:flex lg:border-0 lg:py-2 lg:px-4 lg:items-center lg:justify-center "
                     >
                       Sign Out
                     </div>
                   </li>
                   <li className="mt-8 mb-8 lg:mt-0 lg:mb-0">
-                    <div className="text-gray-600 hover:text-indigo-600">
+                    <div className="flex justify-center items-center relative h-full">
                       <Avatar src={currentUser.image} />
                     </div>
                   </li>
@@ -137,7 +155,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                       Sign Up
                     </div>
                   </li>
-                 
                 </ul>
               </>
             )}
@@ -146,8 +163,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             <ul className="justify-center items-center space-y-8 lg:flex lg:space-x-6 lg:space-y-0">
               {navigation.map((item, idx) => {
                 return (
-                  <li key={idx} className="text-gray-600 hover:text-indigo-600">
-                    <a href={item.path}>{item.title}</a>
+                  <li
+                    key={idx}
+                    className="text-gray-600 hover:text-indigo-600 font-semibold"
+                  >
+                    <a href={item.path}>
+                      <div className=" flex justify-center items-center bg-slate-300 rounded-md px-5 py-2 hover:scale-110">
+                        {item.title}
+                      </div>
+                    </a>
                   </li>
                 );
               })}
