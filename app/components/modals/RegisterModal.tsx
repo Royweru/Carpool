@@ -10,6 +10,7 @@ import Input from '@/app/inputs/Input'
 import Button from '../Button'
 import{FcGoogle} from 'react-icons/fc'
 import axios from 'axios'
+import {signIn} from 'next-auth/react'
 import useRegisterModal from '@/app/hooks/useRegisterModal'
 
 const RegisterModal = () => {
@@ -88,10 +89,10 @@ const RegisterModal = () => {
         <hr />
      <Button
        outline
-       label='Login using google'
+       label='Continue with google'
        icon={FcGoogle}
        disabled={isLoading}
-       onClick={()=>{}}
+       onClick={()=>{signIn('google')}}
        />
        <div onClick={toggle} className=' text 2xl text-rose-950 font-light text-center mt-3'>
         <div className=' flex flex-row items-center justify-center gap-x-1'>

@@ -104,9 +104,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                 <ul className="flex flex-col-reverse space-x-0 lg:space-x-6 lg:flex-row">
                   <li className="mt-8 lg:mt-0">
                     <div
-                      onClick={() => {
-                        signOut;
-                      }}
+                      onClick={()=>{signOut()}}
                       className=" hover:cursor-pointer py-3 px-4 text-center border text-gray-600 hover:text-indigo-600 rounded-md block lg:inline lg:border-0"
                     >
                       Sign Out
@@ -114,7 +112,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                   </li>
                   <li className="mt-8 mb-8 lg:mt-0 lg:mb-0">
                     <div className="text-gray-600 hover:text-indigo-600">
-                      <Avatar />
+                      <Avatar src={currentUser.image} />
                     </div>
                   </li>
                 </ul>

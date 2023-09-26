@@ -44,9 +44,10 @@ const LoginModal = () => {
             setIsLoading(false)
     
             if(callback?.ok){
-                
+                reset
                 router.refresh()
                 loginModal.onClose()
+
             }
             if(callback?.error){
                 console.error(callback.error)
@@ -86,7 +87,7 @@ const LoginModal = () => {
        label='Login using google'
        icon={FcGoogle}
        disabled={isLoading}
-       onClick={()=>{}}
+       onClick={()=>{signIn('google')}}
        />
         <div className=' text 2xl text-rose-950 font-light text-center mt-3'>
         <div className=' flex flex-row items-center justify-center'>
