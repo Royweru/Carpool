@@ -43,7 +43,7 @@ const RegisterModal = () => {
             ()=>{
                 reset
                 registerModal.onClose()
-                console.log('successful')
+               
             }
         ).catch((err)=>{
             console.error('Err:', err)

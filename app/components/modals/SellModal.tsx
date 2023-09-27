@@ -9,10 +9,9 @@ import Input from '@/app/inputs/Input'
 
 enum STEPS{
     SELLER = 0,
-    LOCATION=1,
-    INFO=2,
-    IMAGES=3,
-    PRICE=4
+    INFO=1,
+    IMAGES=2,
+    PRICE=3
 }
 const SellModal = () => {
   const sellModal = useSellModal()
@@ -46,8 +45,19 @@ const {
     reset
   } = useForm<FieldValues>({
     defaultValues: {
-      email: "",
-      password: "",
+      seller:"",
+      engineSize:"",
+      fuelType:"",
+      HP:"",
+      transmission:"",
+      torque:"",
+      aspiration:"",
+      acceleration:"",
+      make:"",
+      model:"",
+      image:[],
+      estimatedArrival:"",
+      mileage:1
     },
   });
 
@@ -75,20 +85,101 @@ if(step === STEPS.SELLER){
         </div>
     )
 }
-if(step===STEPS.LOCATION){
+if(step===STEPS.INFO){
     bodyContent=(
-    <div className=' flex flex-col gap-8'>
-         <Heading title='Tell us your location' subtitle='Write the County,city'/>
-         <Input
-           id='location'
-           label='Location'
-           register={register}
-           required
-           errors={errors}
-           />
-    </div>
+       <div className=' flex flex-col gap-8'>
+          <Heading title=' Provide us with the information of your car' subtitle='make sure you fill out the whole form'/>
+          <hr />
+          <Input
+             id='YOM'
+             label='Year of manufacture'
+             register={register}
+             required
+             errors={errors}
+             />
+               <Input
+             id='estimatedArrival'
+             label='In which time will it be availbale'
+             register={register}
+             required
+             errors={errors}
+             />
+               <Input
+             id='drive'
+             label='Drive'
+             register={register}
+             required
+             errors={errors}
+             />
+               <Input
+             id='mileage'
+             label='Mileage'
+             register={register}
+             required
+             errors={errors}
+             />
+               <Input
+             id='engineSize'
+             label='Engine size'
+             register={register}
+             required
+             errors={errors}
+             />
+               <Input
+             id='fuelType'
+             label='Fuel type'
+             register={register}
+             required
+             errors={errors}
+             />
+               <Input
+             id='HP'
+             label='Horse Power'
+             register={register}
+             required
+             errors={errors}
+             />
+           
+               <Input
+             id='transmission'
+             label='Transmission'
+             register={register}
+             required
+             errors={errors}
+             />
+               <Input
+             id='aspiration'
+             label='Aspiration'
+             register={register}
+             required
+             errors={errors}
+             />
+             <Input
+             id='torque'
+             label='Torque'
+             register={register}
+             required
+             errors={errors}
+             />
+               <Input
+             id='make'
+             label='The make e.g Toyota'
+             register={register}
+             required
+             errors={errors}
+             />
+               <Input
+             id='model'
+             label='The model e.g vitz'
+             register={register}
+             required
+             errors={errors}
+             />
+             
+       </div>
     )
 }
+
 
   return (
     <Modal
