@@ -92,6 +92,7 @@ if(step===STEPS.INFO){
           <hr />
           <Input
              id='YOM'
+             type='text'
              label='Year of manufacture'
              register={register}
              required
@@ -99,6 +100,7 @@ if(step===STEPS.INFO){
              />
                <Input
              id='estimatedArrival'
+             type='text'
              label='In which time will it be availbale'
              register={register}
              required
@@ -106,6 +108,7 @@ if(step===STEPS.INFO){
              />
                <Input
              id='drive'
+             type='text'
              label='Drive'
              register={register}
              required
@@ -113,6 +116,7 @@ if(step===STEPS.INFO){
              />
                <Input
              id='mileage'
+             type='nummber'
              label='Mileage'
              register={register}
              required
@@ -120,6 +124,7 @@ if(step===STEPS.INFO){
              />
                <Input
              id='engineSize'
+             type='text'
              label='Engine size'
              register={register}
              required
@@ -134,6 +139,7 @@ if(step===STEPS.INFO){
              />
                <Input
              id='HP'
+             type='text'
              label='Horse Power'
              register={register}
              required
@@ -142,6 +148,7 @@ if(step===STEPS.INFO){
            
                <Input
              id='transmission'
+             type='text'
              label='Transmission'
              register={register}
              required
@@ -149,6 +156,7 @@ if(step===STEPS.INFO){
              />
                <Input
              id='aspiration'
+             
              label='Aspiration'
              register={register}
              required
@@ -156,6 +164,7 @@ if(step===STEPS.INFO){
              />
              <Input
              id='torque'
+             
              label='Torque'
              register={register}
              required
@@ -163,6 +172,7 @@ if(step===STEPS.INFO){
              />
                <Input
              id='make'
+             type='text'
              label='The make e.g Toyota'
              register={register}
              required
@@ -170,6 +180,7 @@ if(step===STEPS.INFO){
              />
                <Input
              id='model'
+             type='text'
              label='The model e.g vitz'
              register={register}
              required
