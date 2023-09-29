@@ -237,10 +237,10 @@ const SellModal = () => {
 
   if (step === STEPS.PRICE){
     bodyContent=(
-    <div className=" flex flex-col gap-7">
+    <div className=" flex flex-col gap-8">
         <Heading title="Price" subtitle="give the price you are willing to sell your car at"/>
         <Input
-          id="price"
+          id="acceleration"
           register={register}
           required
           label="Price"
@@ -254,7 +254,7 @@ const SellModal = () => {
     <Modal
       isOpen={sellModal.isOpen}
       onClose={sellModal.onClose}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
       actionLabel={actionLabel}
       secondaryLabel={secondaryLabel}
       secondaryAction={step == STEPS.SELLER ? undefined : onBack}
