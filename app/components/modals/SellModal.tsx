@@ -2,9 +2,12 @@
 import React, { useMemo, useState } from "react";
 import Modal from "./Modal";
 import useSellModal from "@/app/hooks/useSellModal";
-import { useForm, FieldErrors, FieldValues } from "react-hook-form";
+import { useForm, FieldErrors, FieldValues, SubmitHandler } from "react-hook-form";
 import Heading from "../Heading";
 import Input from "@/app/inputs/Input";
+import ImageUpload from "@/app/inputs/ImageUpload";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 enum STEPS {
   SELLER = 0,
@@ -12,10 +15,14 @@ enum STEPS {
   IMAGES = 2,
   PRICE = 3,
 }
+
+
 const SellModal = () => {
   const sellModal = useSellModal();
 
   const [step, setStep] = useState(STEPS.SELLER);
+  const [isLoading,setIsLoading] = useState(false)
+  const router = useRouter()
   const onBack = () => {
     setStep((value) => value - 1);
   };
@@ -31,6 +38,35 @@ const SellModal = () => {
     return "NEXT";
   }, [step]);
 
+
+  const setCustomValue = (id:string,value:any)=>{
+     setValue(id,value,{
+      shouldValidate:true,
+      shouldTouch:true,
+      shouldDirty:true
+     })
+  }
+
+
+  const onSubmit:SubmitHandler<FieldValues>= (d) => {
+    if (step!==STEPS.PRICE){
+      return onNext()
+    }
+    setIsLoading(true)
+    axios.post('/api/selling',d)
+    .then(()=>{
+      console.log('success!')
+      reset
+      router.refresh()
+      setStep(STEPS.SELLER)
+      sellModal.onClose()
+    }).catch((err)=>{
+      console.error(err)
+    }).finally(()=>{
+      setIsLoading(false)
+    })
+  }
+ 
   const secondaryLabel = useMemo(() => {
     if (step == STEPS.SELLER) {
       return undefined;
@@ -40,6 +76,8 @@ const SellModal = () => {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
     reset,
   } = useForm<FieldValues>({
@@ -59,6 +97,9 @@ const SellModal = () => {
       mileage: 1,
     },
   });
+
+  const image = watch('image')
+
 
   let bodyContent;
 
@@ -96,6 +137,7 @@ const SellModal = () => {
           register={register}
           required
           errors={errors}
+          disabled={isLoading}
         />
         <Input
           id="estimatedArrival"
@@ -103,6 +145,7 @@ const SellModal = () => {
           register={register}
           required
           errors={errors}
+          disabled={isLoading}
         />
         <Input
           id="drive"
@@ -111,6 +154,7 @@ const SellModal = () => {
           register={register}
           required
           errors={errors}
+          disabled={isLoading}
         />
         <Input
           id="mileage"
@@ -118,6 +162,7 @@ const SellModal = () => {
           register={register}
           required
           errors={errors}
+          disabled ={isLoading}
         />
         <Input
           id="engineSize"
@@ -184,9 +229,25 @@ const SellModal = () => {
     bodyContent = (
       <div className=" flex flex-col gap-8">
          <Heading title="Image uploads" subtitle="upload max of 3 images" />
-         <ImageUpload />
+         <ImageUpload onChange={(value)=>{setCustomValue('image',value)}} value={image} />
       </div>
     )
+  }
+
+
+  if (step === STEPS.PRICE){
+    bodyContent=(
+    <div className=" flex flex-col gap-7">
+        <Heading title="Price" subtitle="give the price you are willing to sell your car at"/>
+        <Input
+          id="price"
+          register={register}
+          required
+          label="Price"
+          errors={errors}
+          disabled={isLoading}
+          />
+    </div>)
   }
 
   return (
@@ -199,6 +260,7 @@ const SellModal = () => {
       secondaryAction={step == STEPS.SELLER ? undefined : onBack}
       title="Find a buyer for your car today!"
       body={bodyContent}
+      disabled={isLoading}
     />
   );
 };

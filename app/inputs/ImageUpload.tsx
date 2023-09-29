@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react'
 import { CldUploadWidget } from 'next-cloudinary'
 import{TbPhotoPlus} from 'react-icons/tb'
+import Image from 'next/image'
 
 interface ImageUploadProps{
     onChange:(value:string)=>void,
-    value:string
+    value:string[]
 }
 const ImageUpload:React.FC<ImageUploadProps> = ({onChange, value}) => {
     const submitImage  = useCallback((result:any)=>{
@@ -13,9 +14,9 @@ const ImageUpload:React.FC<ImageUploadProps> = ({onChange, value}) => {
   return (
     <CldUploadWidget
       onUpload={submitImage}
-      uploadPreset="ksr4nuvh"
+      uploadPreset="i9gbpimn"
       options={{
-        maxFiles: 1,
+        maxFiles: 3,
       }}
     >
       {({ open }) => {
@@ -40,6 +41,7 @@ const ImageUpload:React.FC<ImageUploadProps> = ({onChange, value}) => {
             <div className=" font-semibold text-lg text-red-500">
                 Cick to upload
             </div>
+            
            
           </div>
         );
