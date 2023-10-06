@@ -31,7 +31,12 @@ export default async function RootLayout({
       <Navbar currentUser = {currentUser} />
       </Clientonly>
       
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className=' pt-5 pb-12'>
+        {children}
+        </div>
+        
+        </body>
     </html>
   )
 }

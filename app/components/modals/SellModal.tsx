@@ -56,7 +56,7 @@ const SellModal = () => {
     axios.post('/api/selling',d)
     .then(()=>{
       console.log('success!')
-      reset
+      reset()
       router.refresh()
       setStep(STEPS.SELLER)
       sellModal.onClose()
@@ -84,6 +84,7 @@ const SellModal = () => {
     defaultValues: {
       seller: "",
       engineSize: "",
+      availability:true,
       fuelType: "",
       HP: "",
       transmission: "",
@@ -95,6 +96,7 @@ const SellModal = () => {
       image: [],
       estimatedArrival: "",
       mileage: 1,
+      price:0,
     },
   });
 
@@ -215,7 +217,7 @@ const SellModal = () => {
           errors={errors}
         />
         <Input
-          id="model"
+          id="type"
           label="The model e.g vitz"
           register={register}
           required

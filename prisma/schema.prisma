@@ -51,22 +51,22 @@ model Car{
    id String@id @default(auto())@map("_id")@db.ObjectId
    YOM String
    userId String @db.ObjectId
-   availability String
-   drive String
+   availability Boolean
+   drive String?
    mileage Int
    engineSize String
-   fuelType String
+   fuelType String?
    HP String
    transmission String
    torque String
    aspiration String?
    acceleration String?
    make String
-   model String
    image String[]
    seller String
    estimatedArrival String?
-   
+   type String
+   price Int
 
    bookings Booking[]
    user User @relation(fields: [userId],references: [id],onDelete:Cascade)
@@ -79,6 +79,7 @@ model Booking{
   carId String @db.ObjectId
   startDate DateTime
   endDate DateTime
+  totalPrice Int
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId],references: [id],onDelete:Cascade)

@@ -18,7 +18,7 @@ export const brandlogos=[
 ]
 const Makelogo = () => {
   return (
-    <div className=' w-full flex flex-wrap bg-transparent justify-between relative '>
+    <div className=' w-full flex flex-wrap bg-transparent justify-even relative '>
         {brandlogos.map(brand=>(
            <LogoDisplay key={brand.make} logo={brand.logo} name={brand.make}/>
         ))}
