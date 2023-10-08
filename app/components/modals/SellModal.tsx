@@ -93,7 +93,7 @@ const SellModal = () => {
       acceleration: "",
       make: "",
       model: "",
-      image: [],
+      image:[],
       estimatedArrival: "",
       mileage: 1,
       price:0,
@@ -218,7 +218,14 @@ const SellModal = () => {
         />
         <Input
           id="type"
-          label="The model e.g vitz"
+          label="The type e.g sedan"
+          register={register}
+          required
+          errors={errors}
+        />
+        <Input
+          id="acceleration"
+          label="Acceleration from 0-100km/hr"
           register={register}
           required
           errors={errors}
@@ -242,12 +249,13 @@ const SellModal = () => {
     <div className=" flex flex-col gap-8">
         <Heading title="Price" subtitle="give the price you are willing to sell your car at"/>
         <Input
-          id="acceleration"
+          id="price"
           register={register}
           required
           label="Price"
           errors={errors}
           disabled={isLoading}
+          type="number"
           />
     </div>)
   }

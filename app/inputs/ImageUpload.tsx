@@ -26,7 +26,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
         return (
           <div
             onClick={() => open?.()}
-            className=" relative 
+            className=" 
+            relative 
             cursor-pointer 
             hover:opacity-70
              transition
