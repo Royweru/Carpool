@@ -3,8 +3,9 @@ import React from 'react'
 
 import Image from 'next/image'
 
+
 interface AvatarProps{
-    src:String|null|undefined,
+    src:String|null,
 }
 
 const Avatar:React.FC<AvatarProps> = ({

@@ -24,7 +24,7 @@ export async function POST(
         estimatedArrival,
         price,
         type,
-        
+    
     }= body
 
     try {
@@ -44,7 +44,8 @@ export async function POST(
                 aspiration,
                 acceleration,
                 make,
-                model,
+                type,
+                price,
                 image,
                 seller,
                 estimatedArrival,
